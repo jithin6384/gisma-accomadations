@@ -22,8 +22,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password, Role role) {
-        this.id = id;
+    public User( String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;

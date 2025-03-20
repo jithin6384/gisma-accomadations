@@ -27,21 +27,21 @@ public class UserController {
         if(users.size() > 0 ){
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Users not found.");
+        return new ResponseEntity<>("Users not found", HttpStatus.NOT_FOUND);
 
 
     }
 
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable  Integer userId){
+    public ResponseEntity<?> getUser(@PathVariable  Integer userId){
         User user = userService.getUser(userId);
 
         if(user != null){
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
-
-        return new ResponseEntity<>(new User(), HttpStatus.NOT_FOUND);
+        //new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND)
+        return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
 
     }
 
