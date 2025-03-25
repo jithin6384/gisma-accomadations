@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     public boolean existsByEmail(String email) {
-        return userRepo.findByEmail(email).isPresent();
+        return (userRepo.findByEmail(email) != null );
     }
 
 
@@ -49,5 +50,12 @@ public class UserService {
 
     public void deleteUser(int userId) {
         userRepo.deleteById(userId);
+    }
+
+    public User  findUser(User user) {
+
+        User getUser = userRepo.findByEmail(user.getEmail());
+
+        return getUser != null ? getUser : null ;
     }
 }

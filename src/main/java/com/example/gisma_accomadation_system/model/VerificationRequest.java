@@ -12,8 +12,8 @@ public class VerificationRequest {
     private Accommodation accommodation;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "admin_id", nullable = false)
-    private User admin;
+    @JoinColumn(name = "seller_id", nullable = false)
+    private User seller;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -22,9 +22,9 @@ public class VerificationRequest {
     public VerificationRequest() {
     }
 
-    public VerificationRequest( Accommodation accommodation, User admin, VerificationStatus status) {
+    public VerificationRequest( Accommodation accommodation, User seller, VerificationStatus status) {
         this.accommodation = accommodation;
-        this.admin = admin;
+        this.seller = seller;
         this.status = status;
     }
 
@@ -45,11 +45,11 @@ public class VerificationRequest {
     }
 
     public User getAdmin() {
-        return admin;
+        return seller;
     }
 
-    public void setAdmin(User admin) {
-        this.admin = admin;
+    public void setAdmin(User seller) {
+        this.seller = seller;
     }
 
     public VerificationStatus getStatus() {
@@ -65,7 +65,7 @@ public class VerificationRequest {
         return "VerificationRequest{" +
                 "id=" + id +
                 ", accommodation=" + accommodation +
-                ", admin=" + admin +
+                ", admin=" + seller +
                 ", status=" + status +
                 '}';
     }

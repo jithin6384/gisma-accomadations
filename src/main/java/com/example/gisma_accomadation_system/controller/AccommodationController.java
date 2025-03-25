@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @RestController
 @RequestMapping("/api/v1/")
@@ -22,10 +23,24 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodationService.getAllAccommodations(), HttpStatus.OK);
     }
 
-    @GetMapping("accommodations/zone/{zoneId}")
-    public ResponseEntity<List<Accommodation>> getAccommodationsByZone(@PathVariable int zoneId) {
-        return new ResponseEntity<>(accommodationService.getAccommodationsByZone(zoneId), HttpStatus.OK);
+    @GetMapping("/accommodationsbyId")
+    public ResponseEntity<List<Accommodation>> getAccommodationsByIds(@RequestParam(required = false) String ids) {
+        System.out.println("String ids " + ids);
+        if(ids.isEmpty()){
+            return null;
+        }
+        List<String> idList = new ArrayList<>(List.of(ids.split(",")));
+
+        List<Integer> idLists = new ArrayList<>();
+        idList.forEach(id -> idLists.add(Integer.parseInt(id)));;
+
+        return new ResponseEntity<>(accommodationService.getAccommodationsByIds(idLists), HttpStatus.OK);
     }
+
+//    @GetMapping("accommodations/zone/{zoneId}")
+//    public ResponseEntity<List<Accommodation>> getAccommodationsByZone(@PathVariable int zoneId) {
+//        return new ResponseEntity<>(accommodationService.getAccommodationsByZone(zoneId), HttpStatus.OK);
+//    }
 
     @GetMapping("accommodations/seller/{sellerId}")
     public ResponseEntity<List<Accommodation>> getAccommodationsBySeller(@PathVariable int sellerId) {
@@ -33,12 +48,11 @@ public class AccommodationController {
         return new ResponseEntity<>(accommodationService.getAccommodationsBySeller(sellerId), HttpStatus.OK);
     }
 
-    @PostMapping("accommodation/{sellerId}/{zoneId}")
+    @PostMapping("accommodation/{sellerId}")
     public ResponseEntity<Accommodation> createAccommodation(
             @PathVariable int sellerId,
-            @PathVariable int zoneId,
             @RequestBody Accommodation accommodation) {
-        Accommodation newAccommodation = accommodationService.createAccommodation(accommodation, sellerId, zoneId);
+        Accommodation newAccommodation = accommodationService.createAccommodation(accommodation, sellerId);
         return new ResponseEntity<>(newAccommodation, HttpStatus.OK);
     }
 

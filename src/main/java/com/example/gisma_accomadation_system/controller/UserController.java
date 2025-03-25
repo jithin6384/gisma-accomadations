@@ -3,13 +3,20 @@ package com.example.gisma_accomadation_system.controller;
 
 import com.example.gisma_accomadation_system.model.User;
 import com.example.gisma_accomadation_system.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
 
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 @RequestMapping("/api/v1/")
 public class UserController {
@@ -61,6 +68,28 @@ public class UserController {
         }
 
 //         return new ResponseEntity<>(userService.getUser(user.getId()), HttpStatus.OK);
+    }
+    @PostMapping("/auth/login")
+    public ResponseEntity<?> loginUser(@RequestBody User user){
+        User getUser = userService.findUser(user);
+        System.out.println("here ..........");
+        if(user.getPassword().equals(getUser.getPassword())){
+
+
+            Map<String, Object> repsonseBody = new HashMap<>();
+             repsonseBody.put("message", "Login successful");
+             repsonseBody.put("userId", getUser.getId() + " ");
+             repsonseBody.put("userRole", getUser.getRole().name());
+
+//            session.setAttribute("user", getUser); // ✅ Store user in session
+             return new ResponseEntity<>(repsonseBody, HttpStatus.OK);
+
+//            return ResponseEntity.ok().headers(headers).body("Login successful");
+
+        } else {
+            return new ResponseEntity<>("Invalid password", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
     }
 
     @PutMapping("/user/{userId}")

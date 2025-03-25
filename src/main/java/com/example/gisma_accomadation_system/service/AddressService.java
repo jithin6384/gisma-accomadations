@@ -36,4 +36,15 @@ public class AddressService {
 
         return addressRepo.save(existingAddress);
     }
+
+    public List<Address> searchAddresses(String zone, String pincode) {
+        if (zone != null && pincode != null)
+            return addressRepo.findByZoneAndPostalCode(zone, pincode);
+        else if (zone != null)
+            return addressRepo.findByZone(zone);
+        else if (pincode != null)
+            return addressRepo.findByPostalCode(pincode);
+        else
+            return addressRepo.findAll();
+    }
 }

@@ -29,19 +29,19 @@ public class AccommodationService {
         return accommodationRepo.findAll();
     }
 
-    public List<Accommodation> getAccommodationsByZone(int zoneId) {
-
-            Zone zone = zoneRepo.findById(zoneId).orElse(null);
-        if(zone != null){
-
-           return  accommodationRepo.findAccommodationsByZone(zoneId);
-        }else{
-            return null;
-        }
-
-
-
-    }
+//    public List<Accommodation> getAccommodationsByZone(int zoneId) {
+//
+//            Zone zone = zoneRepo.findById(zoneId).orElse(null);
+//        if(zone != null){
+//
+//           return  accommodationRepo.findAccommodationsByZone(zoneId);
+//        }else{
+//            return null;
+//        }
+//
+//
+//
+//    }
 
 
         public List<Accommodation> getAccommodationsBySeller(int sellerId) {
@@ -54,13 +54,9 @@ public class AccommodationService {
 
         }
 
-    public Accommodation createAccommodation(Accommodation accommodation, int sellerId, int zoneId) {
+    public Accommodation createAccommodation(Accommodation accommodation, int sellerId) {
         User seller = userRepo.findById(sellerId).orElse(null);
-
-        Zone zone = zoneRepo.findById(zoneId).orElse(null);
-
         accommodation.setSeller(seller);
-        accommodation.setZone(zone);
         return accommodationRepo.save(accommodation);
     }
 
@@ -70,7 +66,6 @@ public class AccommodationService {
             accommodation.setTitle(updatedAccommodation.getTitle());
             accommodation.setDescription(updatedAccommodation.getDescription());
             accommodation.setPrice(updatedAccommodation.getPrice());
-            accommodation.setLocation(updatedAccommodation.getLocation());
             accommodation.setVerified(updatedAccommodation.getVerified());
 
             return accommodationRepo.save(accommodation);
@@ -85,5 +80,9 @@ public class AccommodationService {
             throw new RuntimeException("Accommodation not found");
         }
         accommodationRepo.deleteById(id);
+    }
+
+    public List<Accommodation> getAccommodationsByIds(List<Integer> ids) {
+        return accommodationRepo.findByIdIn(ids);
     }
 }

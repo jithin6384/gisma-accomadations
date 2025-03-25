@@ -39,9 +39,9 @@ public class VerificationRequestService {
         Accommodation accommodation = accommodationRepo.findById(accommodationId)
                 .orElseThrow(() -> new RuntimeException("Accommodation not found"));
         User admin = userRepo.findById(adminId)
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+                .orElseThrow(() -> new RuntimeException("Seller not found"));
 
-        VerificationRequest request = new VerificationRequest(null, accommodation, admin, VerificationStatus.PENDING);
+        VerificationRequest request = new VerificationRequest( accommodation, admin, VerificationStatus.PENDING);
         return verificationRequestRepo.save(request);
     }
 
@@ -49,9 +49,22 @@ public class VerificationRequestService {
     public VerificationRequest updateRequestStatus(int requestId, VerificationStatus status) {
         VerificationRequest request = verificationRequestRepo.findById(requestId)
                 .orElseThrow(() -> new RuntimeException("Verification request not found"));
+       if(status == VerificationStatus.VERIFIED){
+           Accommodation accommodation = request.getAccommodation();
+           if(accommodation != null){
+               accommodation.setVerified(true);
+               accommodationRepo.save(accommodation);
+           }
 
+       }
         request.setStatus(status);
         return verificationRequestRepo.save(request);
     }
 
+    public void deleteVerificationRequest(int id) {
+        if (!verificationRequestRepo.existsById(id)) {
+            throw new RuntimeException("verification Request not found");
+        }
+        verificationRequestRepo.deleteById(id);
+    }
 }

@@ -10,4 +10,10 @@ import java.util.List;
 @Repository
 public interface AddressRepo extends MongoRepository<Address, String> {
     Address findAddressByAccommodationId(int accomId);
+
+    List<Address> findByZone(String zone);
+
+    List<Address> findByPostalCode(String postalCode);
+
+    List<Address> findByZoneAndPostalCode(String zone, String postalCode);
  }

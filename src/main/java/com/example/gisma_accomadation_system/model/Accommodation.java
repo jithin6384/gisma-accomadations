@@ -17,12 +17,9 @@ public class Accommodation {
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
-    private String location;
 
-    @ManyToOne
-    @JoinColumn(name = "zone_id", nullable = false)
-    private Zone zone;
+
+
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
@@ -34,12 +31,10 @@ public class Accommodation {
     public Accommodation() {
     }
 
-    public Accommodation( String title, String description, Double price, String location, Zone zone, User seller, Boolean verified) {
+    public Accommodation( String title, String description, Double price, User seller, Boolean verified) {
         this.title = title;
         this.description = description;
         this.price = price;
-        this.location = location;
-        this.zone = zone;
         this.seller = seller;
         this.verified = verified;
     }
@@ -76,21 +71,7 @@ public class Accommodation {
         this.price = price;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Zone getZone() {
-        return zone;
-    }
-
-    public void setZone(Zone zone) {
-        this.zone = zone;
-    }
 
     public User getSeller() {
         return seller;
@@ -115,8 +96,6 @@ public class Accommodation {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", location='" + location + '\'' +
-                ", zone=" + zone +
                 ", seller=" + seller +
                 ", verified=" + verified +
                 '}';
