@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface CommentRepo extends MongoRepository<Comment, String> {
     List<Comment> findCommentsByAccommodationId(int accommodationId);
+
+    void deleteByAccommodationId(int id);
 }

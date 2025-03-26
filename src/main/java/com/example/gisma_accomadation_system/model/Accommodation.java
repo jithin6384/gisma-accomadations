@@ -17,9 +17,26 @@ public class Accommodation {
     @Column(nullable = false)
     private Double price;
 
+    @Column(nullable = false)
+    private String status = "AVAILABLE";
 
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
+    public Accommodation(Integer id, String title, String description, Double price, String status, User seller, Boolean verified) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.status = status;
+        this.seller = seller;
+        this.verified = verified;
+    }
 
     @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
@@ -31,13 +48,7 @@ public class Accommodation {
     public Accommodation() {
     }
 
-    public Accommodation( String title, String description, Double price, User seller, Boolean verified) {
-        this.title = title;
-        this.description = description;
-        this.price = price;
-        this.seller = seller;
-        this.verified = verified;
-    }
+
 
     public Integer getId() {
         return id;
@@ -98,6 +109,7 @@ public class Accommodation {
                 ", price=" + price +
                 ", seller=" + seller +
                 ", verified=" + verified +
+                ", status=" + status +
                 '}';
     }
 }

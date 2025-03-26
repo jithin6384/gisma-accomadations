@@ -5,6 +5,7 @@ import com.example.gisma_accomadation_system.model.Accommodation;
 import com.example.gisma_accomadation_system.model.User;
 import com.example.gisma_accomadation_system.model.Zone;
 import com.example.gisma_accomadation_system.repo.AccommodationRepo;
+import com.example.gisma_accomadation_system.repo.CommentRepo;
 import com.example.gisma_accomadation_system.repo.UserRepo;
 import com.example.gisma_accomadation_system.repo.ZoneRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,8 @@ public class AccommodationService {
     @Autowired
     private ZoneRepo zoneRepo;
 
-
+    @Autowired
+    private CommentRepo commentRepo;
     public List<Accommodation> getAllAccommodations() {
         return accommodationRepo.findAll();
     }
@@ -80,6 +82,8 @@ public class AccommodationService {
             throw new RuntimeException("Accommodation not found");
         }
         accommodationRepo.deleteById(id);
+
+        commentRepo.deleteByAccommodationId(id);
     }
 
     public List<Accommodation> getAccommodationsByIds(List<Integer> ids) {

@@ -5,24 +5,43 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "comments")
+@Document(collection = "accommodation_comments")
 public class Comment {
 
     @Id
     private String id;
     private int accommodationId;
     private int userId;
-    private String comment;
+    private String commentText;
+
+    public String getCommentText() {
+        return commentText;
+    }
+
+    public void setCommentText(String commentText) {
+        this.commentText = commentText;
+    }
+
+    public double getReview() {
+        return review;
+    }
+
+    public void setReview(double review) {
+        this.review = review;
+    }
+
+    private double review;
     private LocalDateTime timestamp;
 
     public Comment() {
     }
 
-    public Comment( int accommodationId, int userId, String comment) {
+    public Comment( int accommodationId, int userId, String commentText, double review) {
         this.accommodationId = accommodationId;
         this.userId = userId;
-        this.comment = comment;
+        this.commentText = commentText;
         this.timestamp = LocalDateTime.now();
+        this.review = review;
     }
 
     public String getId() {
@@ -49,13 +68,6 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public LocalDateTime getTimestamp() {
         return timestamp;
@@ -71,7 +83,8 @@ public class Comment {
                 "id='" + id + '\'' +
                 ", accommodationId=" + accommodationId +
                 ", userId=" + userId +
-                ", comment='" + comment + '\'' +
+                ", comment='" + commentText + '\'' +
+                ", reviews =" +  review +
                 ", timestamp=" + timestamp +
                 '}';
     }
