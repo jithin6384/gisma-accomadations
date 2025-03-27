@@ -1,5 +1,6 @@
 package com.example.gisma_accomadation_system.model;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -31,6 +32,7 @@ public class Comment {
     }
 
     private double review;
+    @CreatedDate
     private LocalDateTime timestamp;
 
     public Comment() {
